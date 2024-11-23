@@ -1,0 +1,42 @@
+pipeline{
+    agent any
+    environment{
+        NODE_VERIONS = '18.x'
+    }
+    tools{
+        nodejs "${NODE_VERIONS}"
+ 
+    }
+    stages{
+        stage('Checkout'){
+            steps{
+                Checkout scm
+            }
+
+        }
+        stage("Install dependeies")}{
+            steps{
+                if(isUnix()){
+                    sh 'npm install'
+                }
+                esle
+                {sh 'npm install'}
+            }
+        stage("Start application and run test"){
+             steps{
+                script{
+                    sh 'npm start &'
+                    sh 'wait-on http://localhost:8090'
+                    sh 'npm test'
+                }
+             }
+        }
+        }
+        post {
+            always{
+                echo "CI pipeline completed Sasho"
+            }
+        }
+    }
+    
+
