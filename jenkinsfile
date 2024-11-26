@@ -10,24 +10,22 @@ pipeline{
     stages{
         stage('Checkout'){
             steps{
-                Checkout scm
+                git branch : 'main', url: 'https://github.com/dimov95/01StudentRegistryApp'
             }
 
         }
         stage("Install dependeies")}{
             steps{
-                if(isUnix()){
-                    sh 'npm install'
-                }
-                esle
-                {sh 'npm install'}
+            
+                    bat 'npm install'
+            
             }
         stage("Start application and run test"){
              steps{
                 script{
-                    sh 'npm start &'
-                    sh 'wait-on http://localhost:8090'
-                    sh 'npm test'
+                    bat 'npm start &'
+                    bat 'wait-on http://localhost:8090'
+                    bat  'npm test'
                 }
              }
         }
